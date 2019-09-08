@@ -1,12 +1,16 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { Header } from 'react-navigation';
 import { Colors } from '../../utils/colors';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: height - Header.HEIGHT - 20,
     backgroundColor: Colors.RED,
     alignItems: 'center'
+  },
+  avoidingStyle: {
+    flex: 1
   },
   header: {
     marginTop: 83,
@@ -59,6 +63,9 @@ const styles = StyleSheet.create({
   },
   buttonRegisterText: {
     color: Colors.WHITE
+  },
+  spacerRegister: {
+    height: 30
   }
 });
 

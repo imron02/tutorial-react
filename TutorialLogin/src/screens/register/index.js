@@ -4,24 +4,26 @@ import {
   Image,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import logo from '../../images/logo.png';
 import { styles } from './styles';
 
-class LoginScreen extends Component {
-  onRegister = () => {
+class RegisterScreen extends Component {
+  onGoBack = () => {
     const { navigation } = this.props;
 
-    navigation.navigate('RegisterScreen');
-  };
+    navigation.goBack();
+  }
 
   renderHeader = () => {
     return (
       <View style={styles.header}>
         <Image source={logo} style={styles.headerLogo} />
-        <Text style={styles.title}>Silahkan login untuk melanjutkan</Text>
+        <Text style={styles.title}>Silahkan register untuk membuat akun</Text>
       </View>
     );
   };
@@ -38,18 +40,21 @@ class LoginScreen extends Component {
           placeholder="Password"
           style={styles.boxInput}
         />
-        <TouchableOpacity style={styles.forgotPassword}>
-          <Text style={styles.forgotPasswordText}>Lupa password?</Text>
-        </TouchableOpacity>
+        <View style={styles.spacer} />
+        <TextInput
+          placeholder="Konfirmasi"
+          style={styles.boxInput}
+        />
+        <View style={styles.spacerRegister} />
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>MASUK</Text>
+          <Text style={styles.buttonText}>DAFTAR</Text>
         </TouchableOpacity>
         <View style={styles.spacer} />
         <TouchableOpacity
           style={[styles.button, styles.buttonRegister]}
-          onPress={this.onRegister}
+          onPress={this.onGoBack}
         >
-          <Text style={[styles.buttonText, styles.buttonRegisterText]}>DAFTAR</Text>
+          <Text style={[styles.buttonText, styles.buttonRegisterText]}>Sudah punya akun? Masuk</Text>
         </TouchableOpacity>
       </View>
     );
@@ -57,12 +62,16 @@ class LoginScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        {this.renderHeader()}
-        {this.renderBody()}
-      </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <KeyboardAvoidingView contentContainerStyle={styles.avoidingStyle}>
+          <View style={styles.container}>
+            {this.renderHeader()}
+            {this.renderBody()}
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
     );
   }
 }
 
-export default LoginScreen;
+export default RegisterScreen;
