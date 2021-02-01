@@ -15,7 +15,6 @@ const SplashScreen = () => {
   const initApp = async () => {
     try {
       const token = await AsyncStorage.getItem('@key_token');
-      console.log('token', token);
       if (token !== null) {
         dispatch({ type: SIGN_IN, payload: token });
       } else {

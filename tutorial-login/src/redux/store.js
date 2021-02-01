@@ -1,4 +1,12 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from './root_reducer';
 
-export default createStore(rootReducer);
+const middlewares = [thunk];
+
+if (__DEV__) {
+  const createDebugger = require('redux-flipper').default;
+  middlewares.push(createDebugger());
+}
+
+export default createStore(rootReducer, applyMiddleware(...middlewares));

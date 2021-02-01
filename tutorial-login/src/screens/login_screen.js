@@ -1,37 +1,18 @@
+import { Formik } from 'formik';
 import React from 'react';
 import {
-  Alert,
-  View,
+  StyleSheet,
   Text,
   TextInput,
-  StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { Formik } from 'formik';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { connect } from 'react-redux';
 import * as Yup from 'yup';
-
-import { SIGN_IN, SIGN_OUT } from '../utils/constant';
 import login from '../redux/login_action';
 
-const token = 'dummy-token';
-
-const LoginScreen = () => {
-  const dispatch = useDispatch();
-
-  const onLogin = async ({ email, password }) => {
-    try {
-      const { token } = await login(email, password);
-
-      dispatch({ type: SIGN_IN, payload: token });
-      await AsyncStorage.setItem('@key_token', token);
-    } catch (e) {
-      dispatch({ type: SIGN_OUT });
-      AsyncStorage.removeItem('@key_token');
-      Alert.alert('Warning', e);
-    }
-  };
+const LoginScreen = ({ handleLogin }) => {
+  const onLogin = ({ email, password }) => handleLogin(email, password);
 
   return (
     <View style={styles.container}>
@@ -150,4 +131,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginScreen;
+const mapDispatchToProps = (dispatch) => ({
+  handleLogin: (email, password) => dispatch(login(email, password))
+});
+
+export default connect(null, mapDispatchToProps)(LoginScreen);
